@@ -1,10 +1,8 @@
-set (TESTNAME test_brewer)  
+set (TESTNAME test_ledcontrol)  
 include_directories(../src)
 
 add_executable(${TESTNAME}
     TestMain.cc
-    TestCurveStore.cc
-    TestSegment.cc
     TestTcpInterface.cc)
 
 target_link_libraries(${TESTNAME}
