@@ -11,11 +11,11 @@
 
 bool stopControlRequested = false;
 
-TcpInterface tcpint;
+UdpInterface udpint;
 UnixDomainSocketInterface unixint;
 
-void startTCPListening() {
-	tcpint.run();
+void startUDPListening() {
+	udpint.run();
 }
 
 void startUnixDomainListening() {
@@ -33,10 +33,10 @@ int main(void) {
     signal(SIGINT, signalHandler);
     signal(SIGTERM, signalHandler);
 
-    LedControl ledcontrol(&tcpint, &unixint);
+    LedControl ledcontrol(&udpint, &unixint);
 
-	std::thread t1(startTCPListening);
-    std::thread t2(startUnixDomainListening);
+    std::thread t1(startUnixDomainListening);
+    std::thread t2(startUDPListening);
     ledcontrol.run();
 	exit(0);
 }

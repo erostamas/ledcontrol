@@ -1,5 +1,5 @@
 add_library(ledcontrol_library STATIC
-    TcpInterface.cc
+    UdpInterface.cc
     UnixDomainSocketInterface.cc
     LedControl.cc
     Logging.cc

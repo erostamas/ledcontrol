@@ -1,6 +1,6 @@
 #pragma once
 
-#include "TcpInterface.h"
+#include "UdpInterface.h"
 #include "UnixDomainSocketInterface.h"
 
 enum class MODE {
@@ -10,7 +10,7 @@ enum class MODE {
 
 class LedControl {
 public:
-    LedControl(TcpInterface*, UnixDomainSocketInterface*);
+    LedControl(UdpInterface*, UnixDomainSocketInterface*);
     ~LedControl();
 
 	void run();
@@ -20,7 +20,7 @@ public:
     void printState();
 
 private:
-    TcpInterface* _tcpInterface;
+    UdpInterface* _udpInterface;
     UnixDomainSocketInterface* _unixInterface;
     bool stopControlRequested = false;
     unsigned _red = 0;

@@ -11,8 +11,8 @@
 #include "Common.h"
 #include "Utils.h"
 
-LedControl::LedControl(TcpInterface* tcpInterface, UnixDomainSocketInterface* unixInterface) :
-    _tcpInterface(tcpInterface),
+LedControl::LedControl(UdpInterface* udpInterface, UnixDomainSocketInterface* unixInterface) :
+    _udpInterface(udpInterface),
     _unixInterface(unixInterface) {
 }
 
@@ -30,7 +30,7 @@ void LedControl::run() {
 }
 
 void LedControl::processCommands() {
-    std::vector<std::string> commandqueue = _tcpInterface->getMessages();
+    std::vector<std::string> commandqueue = _udpInterface->getMessages();
     while (commandqueue.size()) {
         processCommand(commandqueue[0]);
         commandqueue.erase(commandqueue.begin());
