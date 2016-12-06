@@ -23,16 +23,33 @@ void startUnixDomainListening() {
 }
 
 void signalHandler( int signum ) {
-    LOG_INFO << "Interrupt signal received, terminating...\n";
+    LOG_INFO << "Interrupt signal received, terminating...";
     unlink("/ledcontrol_files/ledcontrol_socket_file");
     exit(0);
 }
 
-int main(void) {
-    init_logging();
+void parseCommandlineArguments(int argc, char* argv[], std::string& loglevel) {
+    for (int i = 1; i < argc; ++i) {
+        std::string arg = argv[i];
+        if ((arg == "-l") || (arg == "--loglevel")) {
+            if (i + 1 < argc) {
+                loglevel = argv[i + 1];
+            }
+            return;
+        }
+    }
+}
+
+int main(int argc, char* argv[]) {
+    std::string loglevel = "INFO";
+    if (argc > 2) {
+        parseCommandlineArguments(argc, argv, loglevel);
+    }
+    init_logging(loglevel);
     signal(SIGINT, signalHandler);
     signal(SIGTERM, signalHandler);
 
+    LOG_INFO << "LEDCONTROL starting up...\n";
     LedControl ledcontrol(&udpint, &unixint);
 
     std::thread t1(startUnixDomainListening);

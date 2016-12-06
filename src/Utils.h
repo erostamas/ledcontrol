@@ -1,4 +1,4 @@
-class Utils{
+class Utils {
 public:
     static bool fileExists (const std::string& name) {
       struct stat buffer;   

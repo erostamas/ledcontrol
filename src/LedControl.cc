@@ -10,6 +10,7 @@
 #include "LedControl.h"
 #include "Common.h"
 #include "Utils.h"
+#include "Logging.h"
 
 LedControl::LedControl(UdpInterface* udpInterface, UnixDomainSocketInterface* unixInterface) :
     _udpInterface(udpInterface),
@@ -43,13 +44,16 @@ void LedControl::processCommands() {
 }
 
 void LedControl::processCommand(std::string message) {
-    if (message.substr(0, 8) == "setcolor") {
+    const char sep = ' ';
+    std::vector<std::string> split_message = Utils::split(message, sep);
+    if (split_message[0] == "setcolor") {
         // TODO: exception handling
-        const char sep = ' ';
-        std::vector<std::string> colors = Utils::split(message.substr(8), sep);
-        _red = std::stoul(colors[0]);
-        _green = std::stoul(colors[1]);
-        _blue = std::stoul(colors[2]);
+        _red = std::stoul(split_message[1]);
+        _green = std::stoul(split_message[2]);
+        _blue = std::stoul(split_message[3]);
+    } else if (split_message[0] == "setloglevel") {
+        // TODO: exception handling
+        set_loglevel(split_message[1]);
     }
 }
 

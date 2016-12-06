@@ -28,5 +28,7 @@ typedef boost::log::sources::severity_logger_mt<severity_level> logger_t;
 
 BOOST_LOG_GLOBAL_LOGGER(global_logger, logger_t)
 
-void init_logging();
+void init_logging(std::string);
+
+bool set_loglevel(std::string);
 

@@ -43,7 +43,7 @@ BOOST_LOG_GLOBAL_LOGGER_INIT(global_logger, src::logger) {
     return _logger;
 }
 
-void init_logging() {
+void init_logging(std::string loglevel) {
     logging::add_common_attributes();
     const string log_dir = get_log_dir();
     const string log_filename = log_dir + "ledcontrol.log";
@@ -56,17 +56,20 @@ void init_logging() {
                 << expr::format_date_time<boost::posix_time::ptime>("TimeStamp", "%Y-%m-%d %H:%M:%S.%f")
                 << " [" << expr::attr<severity_level>("Severity") << "]: "
                 << expr::smessage));
-
-    for (size_t log_level_index = 0; log_level_index < log_levels_size; ++log_level_index) {
-        if (log_levels[log_level_index] == "INFO") {
-            log_level_number = log_level_index;
-            break;
-        }
-    }
-    LOG_INFO << "Logging initialized with log level: " << log_levels[log_level_number];
-    logging::core::get()->set_filter(severity >= log_level_number);
+    set_loglevel(loglevel);
 }
 
+bool set_loglevel(std::string loglevel) {
+    for (size_t log_level_index = 0; log_level_index < log_levels_size; ++log_level_index) {
+        if (log_levels[log_level_index] == loglevel) {
+            logging::core::get()->set_filter(severity >= log_level_index);
+            LOG_INFO << "Log level set to: " << loglevel;
+            return true;
+        }
+    }
+    LOG_ERROR << "Failed to set loglevel to: " << loglevel;
+    return false;
+}
 
 ostream& operator<<(ostream& os, severity_level level) {
     if (static_cast<size_t>(level) < log_levels_size) {
