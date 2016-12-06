@@ -54,9 +54,7 @@ void LedControl::processCommand(std::string message) {
     std::vector<std::string> split_message = Utils::split(message, sep);
     if (split_message[0] == "setcolor") {
         // TODO: exception handling
-        _red = std::stoul(split_message[1]);
-        _green = std::stoul(split_message[2]);
-        _blue = std::stoul(split_message[3]);
+        setColor(std::stoul(split_message[1]), std::stoul(split_message[2]), std::stoul(split_message[3]));
     } else if (split_message[0] == "setloglevel") {
         // TODO: exception handling
         set_loglevel(split_message[1]);
@@ -77,15 +75,15 @@ void LedControl::writeXML() {
 
 void LedControl::printState() {
     std::system("clear");
-    std::cout << "Connection state: \n";
-              /* if (_tcpInterface->_connected) {
-                  std::cout << "Connected" << "\n";
-              } else {
-                  std::cout << "Disconnected" << "\n";
-              } */
     std::cout << "RED:   " << _red << "\n"
               << "GREEN: " << _green << "\n"
               << "BLUE:  " << _blue << std::endl;
+}
+
+void LedControl::setColor(unsigned red, unsigned green, unsigned blue) {
+    _red = red;
+    _green = green;
+    _blue = blue;
 }
 
 

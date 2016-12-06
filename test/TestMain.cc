@@ -3,5 +3,3 @@
 #include <boost/test/unit_test.hpp>
 
 #define BOOST_LOG_DYN_LINK 1
-
-BOOST_GLOBAL_FIXTURE(GlobalTestFixture);

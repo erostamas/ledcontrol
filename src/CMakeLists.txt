@@ -3,6 +3,8 @@ add_library(ledcontrol_library STATIC
     UnixDomainSocketInterface.cc
     LedControl.cc
     Logging.cc
+    RGBColor.cc
+    HSVColor.cc
 )
 target_link_libraries(ledcontrol_library
     boost_log

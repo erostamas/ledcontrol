@@ -3,10 +3,10 @@ include_directories(../src)
 
 add_executable(${TESTNAME}
     TestMain.cc
-    TestTcpInterface.cc)
+    TestRGBColor.cc)
 
 target_link_libraries(${TESTNAME}
-    brewer_library
+    ledcontrol_library
     boost_unit_test_framework
     boost_log
     boost_thread
