@@ -12,8 +12,15 @@
 #include "Utils.h"
 #include "Logging.h"
 
+<<<<<<< HEAD
 LedControl::LedControl(UdpInterface* udpInterface, UnixDomainSocketInterface* unixInterface) :
     _udpInterface(udpInterface),
+=======
+#include <wiringPi.h>
+
+LedControl::LedControl(TcpInterface* tcpInterface, UnixDomainSocketInterface* unixInterface) :
+    _tcpInterface(tcpInterface),
+>>>>>>> Introduce wiring pi, commented out
     _unixInterface(unixInterface) {
 }
 
@@ -22,7 +29,11 @@ LedControl::~LedControl() {
 }
 
 void LedControl::run() {
+    //wiringPiSetup ();
+    //pinMode (0, OUTPUT);
     while (!stopControlRequested) {
+        //digitalWrite (0, HIGH) ; delay (500) ;
+        //digitalWrite (0,  LOW) ; delay (500) ;
         std::this_thread::sleep_for(std::chrono::milliseconds(1000));
         processCommands();
         printState();
