@@ -12,15 +12,10 @@
 #include "Utils.h"
 #include "Logging.h"
 
-<<<<<<< HEAD
-LedControl::LedControl(UdpInterface* udpInterface, UnixDomainSocketInterface* unixInterface) :
-    _udpInterface(udpInterface),
-=======
 #include <wiringPi.h>
 
-LedControl::LedControl(TcpInterface* tcpInterface, UnixDomainSocketInterface* unixInterface) :
-    _tcpInterface(tcpInterface),
->>>>>>> Introduce wiring pi, commented out
+LedControl::LedControl(UdpInterface* udpInterface, UnixDomainSocketInterface* unixInterface) :
+    _udpInterface(udpInterface),
     _unixInterface(unixInterface) {
 }
 
