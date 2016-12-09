@@ -2,6 +2,8 @@
 
 #include "UdpInterface.h"
 #include "UnixDomainSocketInterface.h"
+#include "RGBColor.h"
+#include "HSVColor.h"
 
 enum class MODE {
     MANUAL,
@@ -19,15 +21,14 @@ public:
     void writeXML();
     void printState();
     void setColor(unsigned red, unsigned green, unsigned blue);
+    void setRed(unsigned red);
+    void setGreen(unsigned green);
+    void setBlue(unsigned blue);
 
 private:
     UdpInterface* _udpInterface;
     UnixDomainSocketInterface* _unixInterface;
     bool stopControlRequested = false;
-    unsigned _red = 0;
-    unsigned _green = 0;
-    unsigned _blue = 0;
-    unsigned _hue = 0;
-    unsigned _saturation = 0;
-    unsigned _value = 0;
+    RGBColor _rgbColor;
+    HSVColor _hsvColor;
 };

@@ -2,11 +2,15 @@
 
 #include <string>
 
+#include "RGBColor.h"
+class RGBColor;
+
 class HSVColor{
 public:
     HSVColor() {}
     HSVColor(double hue, double saturation, double value) : _hue(hue), _saturation(saturation), _value(value) {}
     void setColor(double hue, double saturation, double value);
+    void convertToRGB(RGBColor& rgb);
     std::string toString();
 
     double _hue = 0;

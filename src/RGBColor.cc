@@ -1,8 +1,7 @@
 #include <iostream>
-#include <math.h>
+#include <cmath>
 
 #include "RGBColor.h"
-#include "HSVColor.h"
 
 void RGBColor::setColor(unsigned red, unsigned green, unsigned blue) {
     _red = red;
@@ -10,7 +9,19 @@ void RGBColor::setColor(unsigned red, unsigned green, unsigned blue) {
     _blue = blue;
 }
 
-std::shared_ptr<HSVColor> RGBColor::convertToHSV() {
+void RGBColor::setRed(unsigned red) {
+    _red = red;
+}
+
+void RGBColor::setGreen(unsigned green) {
+    _green = green;
+}
+
+void RGBColor::setBlue(unsigned blue) {
+    _blue = blue;
+}
+
+void RGBColor::convertToHSV(HSVColor& hsv) {
     
     double hue = 0;
     double saturation = 0;
@@ -24,18 +35,10 @@ std::shared_ptr<HSVColor> RGBColor::convertToHSV() {
     double c_min = std::min(std::min(r_prime, g_prime), b_prime);
     double delta = c_max - c_min;
 
-    std::cout << r_prime << std::endl;
-    std::cout << g_prime << std::endl;
-    std::cout << b_prime << std::endl;
-    
-    std::cout << c_max << std::endl;
-    std::cout << c_min << std::endl;
-    std::cout << delta << std::endl;
-
     if (delta == 0) {
         hue = 0;
     } else if (c_max == r_prime) {
-        hue = 60 * fmod(((g_prime - b_prime) / delta), 6);
+        hue = 60 * std::fmod(((g_prime - b_prime) / delta), 6);
     } else if (c_max == g_prime) {
         hue = 60 * (((b_prime - r_prime) / delta) + 2);
     } else if (c_max == b_prime) {
@@ -54,7 +57,9 @@ std::shared_ptr<HSVColor> RGBColor::convertToHSV() {
     
     value = c_max;
     
-    return std::make_shared<HSVColor>(hue, saturation, value);
+    hsv._hue = hue;
+    hsv._saturation = saturation;
+    hsv._value = value;
 }
 
 std::string RGBColor::toString() {

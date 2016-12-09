@@ -55,6 +55,15 @@ void LedControl::processCommand(std::string message) {
     if (split_message[0] == "setcolor") {
         // TODO: exception handling
         setColor(std::stoul(split_message[1]), std::stoul(split_message[2]), std::stoul(split_message[3]));
+    } else if (split_message[0] == "setred") {
+        // TODO: exception handling
+        setRed(std::stoul(split_message[1]));
+    } else if (split_message[0] == "setgreen") {
+        // TODO: exception handling
+        setGreen(std::stoul(split_message[1]));
+    } else if (split_message[0] == "setblue") {
+        // TODO: exception handling
+        setBlue(std::stoul(split_message[1]));
     } else if (split_message[0] == "setloglevel") {
         // TODO: exception handling
         set_loglevel(split_message[1]);
@@ -66,24 +75,41 @@ void LedControl::writeXML() {
     dataxmlfile.open ("/var/www/html/data.xml");
     dataxmlfile << "<?xml version=\"1.0\"?>";
     dataxmlfile << "<colordata>\n";
-    dataxmlfile << "<red>" << _red << "</red>\n";
-    dataxmlfile << "<green>" << _green << "</green>\n";
-    dataxmlfile << "<blue>" << _blue << "</blue>\n";
+    dataxmlfile << "<red>" << _rgbColor._red << "</red>\n";
+    dataxmlfile << "<green>" << _rgbColor._green << "</green>\n";
+    dataxmlfile << "<blue>" << _rgbColor._blue << "</blue>\n";
     dataxmlfile << "</colordata>\n";
     dataxmlfile.close();
 }
 
 void LedControl::printState() {
     std::system("clear");
-    std::cout << "RED:   " << _red << "\n"
-              << "GREEN: " << _green << "\n"
-              << "BLUE:  " << _blue << std::endl;
+    std::cout << "RED:        " << _rgbColor._red << "\n"
+              << "GREEN:      " << _rgbColor._green << "\n"
+              << "BLUE:       " << _rgbColor._blue << "\n\n"
+              << "HUE:        " << _hsvColor._hue << "\n"
+              << "SATURATION: " << _hsvColor._saturation << "\n"
+              << "VALUE:      " << _hsvColor._value << std::endl;
 }
 
 void LedControl::setColor(unsigned red, unsigned green, unsigned blue) {
-    _red = red;
-    _green = green;
-    _blue = blue;
+    _rgbColor.setColor(red, green, blue);
+    _rgbColor.convertToHSV(_hsvColor);
+}
+
+void LedControl::setRed(unsigned red) {
+    _rgbColor.setRed(red);
+    _rgbColor.convertToHSV(_hsvColor);
+}
+
+void LedControl::setGreen(unsigned green) {
+    _rgbColor.setGreen(green);
+    _rgbColor.convertToHSV(_hsvColor);
+}
+
+void LedControl::setBlue(unsigned blue) {
+    _rgbColor.setBlue(blue);
+    _rgbColor.convertToHSV(_hsvColor);
 }
 
 
