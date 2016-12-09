@@ -8,6 +8,12 @@ void HSVColor::setColor(double hue, double saturation, double value) {
     _value = value;
 }
 
+void HSVColor::setIntensity(unsigned intensity) {
+    if ((intensity >= 0) && (intensity <= 100)) {
+        _value = intensity / 100.0;
+    }
+}
+
 void HSVColor::convertToRGB(RGBColor& rgb) {
     double c = _value * _saturation;
     double x = c * (1 - std::abs(std::fmod((_hue / 60), 2) - 1));

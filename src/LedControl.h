@@ -24,6 +24,7 @@ public:
     void setRed(unsigned red);
     void setGreen(unsigned green);
     void setBlue(unsigned blue);
+    void setIntensity(unsigned intensity);
 
 private:
     UdpInterface* _udpInterface;

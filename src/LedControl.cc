@@ -64,6 +64,9 @@ void LedControl::processCommand(std::string message) {
     } else if (split_message[0] == "setblue") {
         // TODO: exception handling
         setBlue(std::stoul(split_message[1]));
+    } else if (split_message[0] == "setintensity") {
+        // TODO: exception handling
+        setIntensity(std::stoul(split_message[1]));
     } else if (split_message[0] == "setloglevel") {
         // TODO: exception handling
         set_loglevel(split_message[1]);
@@ -110,6 +113,11 @@ void LedControl::setGreen(unsigned green) {
 void LedControl::setBlue(unsigned blue) {
     _rgbColor.setBlue(blue);
     _rgbColor.convertToHSV(_hsvColor);
+}
+
+void LedControl::setIntensity(unsigned intensity) {
+    _hsvColor.setIntensity(intensity);
+    _hsvColor.convertToRGB(_rgbColor);
 }
 
 

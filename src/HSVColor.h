@@ -10,6 +10,7 @@ public:
     HSVColor() {}
     HSVColor(double hue, double saturation, double value) : _hue(hue), _saturation(saturation), _value(value) {}
     void setColor(double hue, double saturation, double value);
+    void setIntensity(unsigned intensity);
     void convertToRGB(RGBColor& rgb);
     std::string toString();
 
