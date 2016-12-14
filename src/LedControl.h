@@ -7,7 +7,7 @@
 
 enum class MODE {
     MANUAL,
-    AUTO
+    ANIMATION
 };
 
 class LedControl {
@@ -20,16 +20,22 @@ public:
     void processCommand(std::string message);
     void writeXML();
     void printState();
-    void setColor(unsigned red, unsigned green, unsigned blue);
-    void setRed(unsigned red);
-    void setGreen(unsigned green);
-    void setBlue(unsigned blue);
-    void setIntensity(unsigned intensity);
+    bool setColor(unsigned red, unsigned green, unsigned blue);
+    bool setRed(unsigned red);
+    bool setGreen(unsigned green);
+    bool setBlue(unsigned blue);
+    bool setIntensity(unsigned intensity);
+    bool setColor(std::string red, std::string green, std::string blue);
+    bool setRed(std::string red);
+    bool setGreen(std::string green);
+    bool setBlue(std::string blue);
+    bool setIntensity(std::string intensity);
 
 private:
+    MODE _mode = MODE::MANUAL;
     UdpInterface* _udpInterface;
     UnixDomainSocketInterface* _unixInterface;
-    bool stopControlRequested = false;
+    bool _stopControlRequested = false;
     RGBColor _rgbColor;
     HSVColor _hsvColor;
 };

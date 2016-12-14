@@ -26,7 +26,7 @@ LedControl::~LedControl() {
 void LedControl::run() {
     //wiringPiSetup ();
     //pinMode (0, OUTPUT);
-    while (!stopControlRequested) {
+    while (!_stopControlRequested) {
         //digitalWrite (0, HIGH) ; delay (500) ;
         //digitalWrite (0,  LOW) ; delay (500) ;
         std::this_thread::sleep_for(std::chrono::milliseconds(1000));
@@ -53,22 +53,16 @@ void LedControl::processCommand(std::string message) {
     const char sep = ' ';
     std::vector<std::string> split_message = Utils::split(message, sep);
     if (split_message[0] == "setcolor") {
-        // TODO: exception handling
-        setColor(std::stoul(split_message[1]), std::stoul(split_message[2]), std::stoul(split_message[3]));
+        setColor(split_message[1], split_message[2], split_message[3]);
     } else if (split_message[0] == "setred") {
-        // TODO: exception handling
-        setRed(std::stoul(split_message[1]));
+        setRed(split_message[1]);
     } else if (split_message[0] == "setgreen") {
-        // TODO: exception handling
-        setGreen(std::stoul(split_message[1]));
+        setGreen(split_message[1]);
     } else if (split_message[0] == "setblue") {
-        // TODO: exception handling
-        setBlue(std::stoul(split_message[1]));
+        setBlue(split_message[1]);
     } else if (split_message[0] == "setintensity") {
-        // TODO: exception handling
-        setIntensity(std::stoul(split_message[1]));
+        setIntensity(split_message[1]);
     } else if (split_message[0] == "setloglevel") {
-        // TODO: exception handling
         set_loglevel(split_message[1]);
     }
 }
@@ -95,29 +89,92 @@ void LedControl::printState() {
               << "VALUE:      " << _hsvColor._value << std::endl;
 }
 
-void LedControl::setColor(unsigned red, unsigned green, unsigned blue) {
-    _rgbColor.setColor(red, green, blue);
-    _rgbColor.convertToHSV(_hsvColor);
+bool LedControl::setColor(unsigned red, unsigned green, unsigned blue) {
+    if ((red < 256) && (green < 256) && (blue < 256)) {
+        _rgbColor.setColor(red, green, blue);
+        _rgbColor.convertToHSV(_hsvColor);
+        return true;
+    }
+    return false;
 }
 
-void LedControl::setRed(unsigned red) {
-    _rgbColor.setRed(red);
-    _rgbColor.convertToHSV(_hsvColor);
+bool LedControl::setRed(unsigned red) {
+    if (red < 256) {
+        _rgbColor.setRed(red);
+        _rgbColor.convertToHSV(_hsvColor);
+        return true;
+    }
+    return false;
 }
 
-void LedControl::setGreen(unsigned green) {
-    _rgbColor.setGreen(green);
-    _rgbColor.convertToHSV(_hsvColor);
+bool LedControl::setGreen(unsigned green) {
+    if (green < 256) {
+        _rgbColor.setGreen(green);
+        _rgbColor.convertToHSV(_hsvColor);
+        return true;
+    }
+    return false;
 }
 
-void LedControl::setBlue(unsigned blue) {
-    _rgbColor.setBlue(blue);
-    _rgbColor.convertToHSV(_hsvColor);
+bool LedControl::setBlue(unsigned blue) {
+    if (blue < 256) {
+        _rgbColor.setBlue(blue);
+        _rgbColor.convertToHSV(_hsvColor);
+        return true;
+    }
+    return false;
 }
 
-void LedControl::setIntensity(unsigned intensity) {
-    _hsvColor.setIntensity(intensity);
-    _hsvColor.convertToRGB(_rgbColor);
+bool LedControl::setIntensity(unsigned intensity) {
+    if (intensity < 101) {
+        _hsvColor.setIntensity(intensity);
+        _hsvColor.convertToRGB(_rgbColor);
+        return true;
+    }
+    return false;
 }
 
+bool LedControl::setColor(std::string red, std::string green, std::string blue) {
+    try {
+        return setColor(std::stoul(red), std::stoul(green), std::stoul(blue));
+    } catch (...) {
+        LOG_ERROR << "Exception during setting color: " << red << " " << green  << " " << blue;
+        return false;
+    }
+}
 
+bool LedControl::setRed(std::string red) {
+    try {
+        return setRed(std::stoul(red));
+    } catch (...) {
+        LOG_ERROR << "Exception during setting red: " << red;
+        return false;
+    }
+}
+
+bool LedControl::setGreen(std::string green) {
+    try {
+        return setGreen(std::stoul(green));
+    } catch (...) {
+        LOG_ERROR << "Exception during setting green: " << green;
+        return false;
+    }
+}
+
+bool LedControl::setBlue(std::string blue) {
+    try {
+        return setBlue(std::stoul(blue));
+    } catch (...) {
+        LOG_ERROR << "Exception during setting blue: " << blue;
+        return false;
+    }
+}
+
+bool LedControl::setIntensity(std::string intensity) {
+    try {
+        return setIntensity(std::stoul(intensity));
+    } catch (...) {
+        LOG_ERROR << "Exception during setting intensity: " << intensity;
+        return false;
+    }
+}
