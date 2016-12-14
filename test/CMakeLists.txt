@@ -3,6 +3,7 @@ include_directories(../src)
 
 add_executable(${TESTNAME}
     TestMain.cc
+    TestLedControl.cc
     TestRGBColor.cc
     TestHSVColor.cc)
 

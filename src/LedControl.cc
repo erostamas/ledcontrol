@@ -14,6 +14,9 @@
 
 #include <wiringPi.h>
 
+LedControl::LedControl() {
+}
+
 LedControl::LedControl(UdpInterface* udpInterface, UnixDomainSocketInterface* unixInterface) :
     _udpInterface(udpInterface),
     _unixInterface(unixInterface) {

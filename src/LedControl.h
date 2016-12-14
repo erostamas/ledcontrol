@@ -12,6 +12,7 @@ enum class MODE {
 
 class LedControl {
 public:
+    LedControl();
     LedControl(UdpInterface*, UnixDomainSocketInterface*);
     ~LedControl();
 
@@ -31,7 +32,7 @@ public:
     bool setBlue(std::string blue);
     bool setIntensity(std::string intensity);
 
-private:
+protected:
     MODE _mode = MODE::MANUAL;
     UdpInterface* _udpInterface;
     UnixDomainSocketInterface* _unixInterface;
