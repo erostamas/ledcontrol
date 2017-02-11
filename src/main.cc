@@ -12,14 +12,14 @@
 bool stopControlRequested = false;
 
 UdpInterface udpint;
-UnixDomainSocketInterface unixint;
+//UnixDomainSocketInterface unixint;
 
 void startUDPListening() {
 	udpint.run();
 }
 
 void startUnixDomainListening() {
-	unixint.run();
+	//unixint.run();
 }
 
 void signalHandler( int signum ) {
@@ -50,9 +50,9 @@ int main(int argc, char* argv[]) {
     signal(SIGTERM, signalHandler);
 
     LOG_INFO << "LEDCONTROL starting up...\n";
-    LedControl ledcontrol(&udpint, &unixint);
+    LedControl ledcontrol(&udpint);
 
-    std::thread t1(startUnixDomainListening);
+    //std::thread t1(startUnixDomainListening);
     std::thread t2(startUDPListening);
     ledcontrol.run();
 	exit(0);

@@ -4,6 +4,7 @@
 #include <unistd.h>
 #include <sys/types.h> 
 #include <sys/socket.h>
+#include <sys/stat.h>
 #include <sys/un.h>
 #include <iostream>
 #include <ctime>
@@ -30,6 +31,8 @@ int UnixDomainSocketInterface::bindToPath(std::string path) {
     if (bind(sockfd, (struct sockaddr *) &server_address, sizeof(server_address)) < 0) {
         LOG_ERROR << "Unix Domain Socket ERROR binding to path: " << path;
     }
+    chmod(path.c_str(), 0777);
+    
     return sockfd;
 }
 

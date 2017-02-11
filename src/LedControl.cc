@@ -13,8 +13,13 @@
 #include "Logging.h"
 
 #include <wiringPi.h>
+#include <softPwm.h>
 
 LedControl::LedControl() {
+}
+
+LedControl::LedControl(UdpInterface* udpInterface) :
+    _udpInterface(udpInterface) {
 }
 
 LedControl::LedControl(UdpInterface* udpInterface, UnixDomainSocketInterface* unixInterface) :
@@ -27,15 +32,21 @@ LedControl::~LedControl() {
 }
 
 void LedControl::run() {
-    //wiringPiSetup ();
-    //pinMode (0, OUTPUT);
+    wiringPiSetup();
+    softPwmCreate(7, 0, 255);
+    softPwmCreate(8, 0, 255);
+    softPwmCreate(9, 0, 255);
+    //pinMode (8, OUTPUT);
     while (!_stopControlRequested) {
-        //digitalWrite (0, HIGH) ; delay (500) ;
-        //digitalWrite (0,  LOW) ; delay (500) ;
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+        //digitalWrite (8, HIGH) ; delay (500) ;
+        //digitalWrite (8,  LOW) ; delay (500) ;
+        std::this_thread::sleep_for(std::chrono::milliseconds(50));
         processCommands();
-        printState();
-        writeXML();
+        softPwmWrite(7, _rgbColor._red);
+        softPwmWrite(8, _rgbColor._green);
+        softPwmWrite(9, _rgbColor._blue);
+        //printState();
+        //writeXML();
     }
 }
 
@@ -45,15 +56,19 @@ void LedControl::processCommands() {
         processCommand(commandqueue[0]);
         commandqueue.erase(commandqueue.begin());
     }
-    commandqueue = _unixInterface->getMessages();
-    while (commandqueue.size()) {
-        processCommand(commandqueue[0]);
-        commandqueue.erase(commandqueue.begin());
-    }
+    //commandqueue = _unixInterface->getMessages();
+    //if (commandqueue.size()) {
+    //    ret = true;
+    //    while (commandqueue.size()) {
+    //        processCommand(commandqueue[0]);
+    //        commandqueue.erase(commandqueue.begin());
+    //    }
+    //}
 }
 
 void LedControl::processCommand(std::string message) {
     const char sep = ' ';
+    LOG_DEBUG << "Processing command: " << message << std::endl;
     std::vector<std::string> split_message = Utils::split(message, sep);
     if (split_message[0] == "setcolor") {
         setColor(split_message[1], split_message[2], split_message[3]);

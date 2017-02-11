@@ -13,6 +13,7 @@ enum class MODE {
 class LedControl {
 public:
     LedControl();
+    LedControl(UdpInterface*);
     LedControl(UdpInterface*, UnixDomainSocketInterface*);
     ~LedControl();
 
@@ -34,8 +35,8 @@ public:
 
 protected:
     MODE _mode = MODE::MANUAL;
-    UdpInterface* _udpInterface;
-    UnixDomainSocketInterface* _unixInterface;
+    UdpInterface* _udpInterface = nullptr;
+    UnixDomainSocketInterface* _unixInterface = nullptr;
     bool _stopControlRequested = false;
     RGBColor _rgbColor;
     HSVColor _hsvColor;
