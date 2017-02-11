@@ -2,14 +2,15 @@ set (TESTNAME test_ledcontrol)
 include_directories(../src)
 
 add_executable(${TESTNAME}
-    TestMain.cc
-    TestLedControl.cc
+    Test.cc
+    TestHSVColor.cc
     TestRGBColor.cc
-    TestHSVColor.cc)
+    TestLedControl.cc)
 
 target_link_libraries(${TESTNAME}
     ledcontrol_library
-    boost_unit_test_framework
+    gmock
+    gmock_main
     boost_log
     boost_thread
     boost_system
