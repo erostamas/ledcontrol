@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-#include <sys/types.h> 
+#include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <iostream>
@@ -22,7 +22,7 @@ int UdpInterface::bindToPort(int portno) {
     }
     bzero((char *) &serv_addr, sizeof(serv_addr));
     struct ifreq ifr;
-    strncpy(ifr.ifr_name, "br0", IFNAMSIZ-1);
+    strncpy(ifr.ifr_name, "eth0", IFNAMSIZ-1);
     ioctl(sockfd, SIOCGIFADDR, &ifr);
     serv_addr.sin_family = AF_INET;
     serv_addr.sin_addr.s_addr = (((struct sockaddr_in *)&ifr.ifr_addr)->sin_addr).s_addr;
@@ -43,6 +43,7 @@ void UdpInterface::run() {
 
     sockfd = bindToPort(50001);
     std::string incoming_message;
+    LOG_INFO << "Listening for UDP messages";
     while(1){
         memset(buffer, 0, sizeof(buffer));
         recvfrom(sockfd, buffer, 255, 0, &cli_addr, &clilen);

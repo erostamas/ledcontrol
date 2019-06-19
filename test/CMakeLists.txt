@@ -2,7 +2,6 @@ set (TESTNAME test_ledcontrol)
 include_directories(../src)
 
 add_executable(${TESTNAME}
-    Test.cc
     TestHSVColor.cc
     TestRGBColor.cc
     TestLedControl.cc)

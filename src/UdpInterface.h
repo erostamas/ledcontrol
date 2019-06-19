@@ -11,4 +11,4 @@ public:
     std::vector<std::string> _messageQueue;
 private:
     std::string _wireIpAddress;
-}; 
+};
