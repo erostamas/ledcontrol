@@ -4,7 +4,8 @@ include_directories(../src)
 add_executable(${TESTNAME}
     TestHSVColor.cc
     TestRGBColor.cc
-    TestLedControl.cc)
+    #TestLedControl.cc
+)
 
 target_link_libraries(${TESTNAME}
     ledcontrol_library
