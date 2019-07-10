@@ -26,13 +26,13 @@ CommandPtr StringCommandAdapter::convertMessage(const char* message) const {
     //    // TODO
     //    //set_loglevel(split_message[1]);
     //}
-    LOG_DEBUG << "[StringCommandAdapter] Converting message: " << message << std::endl;
+    LOG_DEBUG << "[StringCommandAdapter] Converting message: " << message;
     std::vector<std::string> tokens;
     boost::split(tokens,message,boost::is_any_of(" "));
     if (tokens.size() != 4 || tokens[0] != "setcolor") {
         return nullptr;
     } else {
-        LOG_DEBUG << "[StringCommandAdapter] setcolor command received" << std::endl;
+        LOG_DEBUG << "[StringCommandAdapter] setcolor command received";
         return std::unique_ptr<SetColorCommand>(new SetColorCommand(_outputControl, tokens[1], tokens[2], tokens[3]));
     }
     return nullptr;

@@ -36,8 +36,7 @@ void LedControl::run() {
     //softPwmCreate(8, 0, 255);
     //softPwmCreate(9, 0, 255);
     //pinMode (8, OUTPUT);
-    //RedisHandler redis;
-    //redis.store();
+
     while (!_stopControlRequested) {
         //digitalWrite (8, HIGH) ; delay (500) ;
         //digitalWrite (8,  LOW) ; delay (500) ;

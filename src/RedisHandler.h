@@ -8,8 +8,8 @@ public:
         _redisClient.connect("192.168.1.247", 6379);
     }
 
-    void store() {
-        std::vector<std::pair<std::string, std::string>> values = {{"key", "value"}, {"key2", "value2"}, {"Julcsi", "Nori"}};
+    void updateColor(unsigned red, unsigned green, unsigned blue) {
+        std::vector<std::pair<std::string, std::string>> values = {{"red", std::to_string(red)}, {"green", std::to_string(green)}, {"blue", std::to_string(blue)}};
         _redisClient.hmset("ledcontrol_process_data", values);
         _redisClient.sync_commit();
     }

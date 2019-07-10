@@ -8,10 +8,10 @@ public:
     : _outputControl(outputControl)
     , _red(red)
     , _green(green)
-    , _blue(blue) {LOG_DEBUG << "SETCOLOR" << std::endl;}
+    , _blue(blue) {}
 
     virtual void execute() override {
-        LOG_DEBUG << "Executing setcolor command with parameters: " << _red << " " << _green << " " << _blue << std::endl;
+        LOG_DEBUG << "Executing setcolor command with parameters: " << _red << " " << _green << " " << _blue;
         _outputControl.setColor(_red, _green, _blue);
     }
 
