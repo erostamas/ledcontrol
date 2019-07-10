@@ -1,0 +1,11 @@
+[Unit]
+Description=Ledcontrol service
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/ledcontrol
+Restart=always
+User=pi
+
+[Install]
+WantedBy=multi-user.target

@@ -37,3 +37,8 @@ add_subdirectory(test)
 add_subdirectory(src)
 
 enable_testing()
+
+INSTALL(FILES ledcontrol.service
+	DESTINATION /etc/systemd/system/
+	PERMISSIONS OWNER_READ OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE
+)
