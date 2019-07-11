@@ -3,6 +3,9 @@
 #include "erostamas/Logging.h"
 #include "RedisHandler.h"
 
+#include <wiringPi.h>
+#include <softPwm.h>
+
 OutputControl::OutputControl() {}
 
 bool OutputControl::setColor(unsigned red, unsigned green, unsigned blue) {
@@ -15,9 +18,10 @@ bool OutputControl::setColor(unsigned red, unsigned green, unsigned blue) {
         } catch (...) {
             LOG_ERROR << "[OutputControl] Failed to write to redis";
         }
-        //softPwmWrite(7, _rgbColor._red);
-        //softPwmWrite(8, _rgbColor._green);
-        //softPwmWrite(9, _rgbColor._blue);
+        LOG_DEBUG << "[OutputControl] Setting color to " << _rgbColor._red << " " << _rgbColor._green << " " << _rgbColor._blue;
+        softPwmWrite(7, _rgbColor._red);
+        softPwmWrite(8, _rgbColor._green);
+        softPwmWrite(9, _rgbColor._blue);
         return true;
     }
     return false;
@@ -33,9 +37,10 @@ bool OutputControl::setIntensity(unsigned intensity) {
         } catch (...) {
             LOG_ERROR << "[OutputControl] Failed to write to redis";
         }
-        //softPwmWrite(7, _rgbColor._red);
-        //softPwmWrite(8, _rgbColor._green);
-        //softPwmWrite(9, _rgbColor._blue);
+        LOG_DEBUG << "[OutputControl] Setting color to " << _rgbColor._red << " " << _rgbColor._green << " " << _rgbColor._blue;
+        softPwmWrite(7, _rgbColor._red);
+        softPwmWrite(8, _rgbColor._green);
+        softPwmWrite(9, _rgbColor._blue);
         return true;
     }
     return false;
