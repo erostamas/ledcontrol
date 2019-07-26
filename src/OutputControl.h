@@ -16,4 +16,5 @@ public:
 private:
     RGBColor _rgbColor;
     HSVColor _hsvColor;
+    std::string _redisIpAddress = "192.168.1.247";
 };

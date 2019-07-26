@@ -6,14 +6,17 @@
 #include <wiringPi.h>
 #include <softPwm.h>
 
-OutputControl::OutputControl() {}
+OutputControl::OutputControl() {
+    Config config("/ledcontrol_files/config.json");
+    _redisIpAddress = config.get<std::string>("redis_ip_address", "192.168.1.247");
+}
 
 bool OutputControl::setColor(unsigned red, unsigned green, unsigned blue) {
     if ((red < 256) && (green < 256) && (blue < 256)) {
         _rgbColor.setColor(red, green, blue);
         _rgbColor.convertToHSV(_hsvColor);
         try {
-            RedisHandler redis;
+            RedisHandler redis(_redisIpAddress);
             redis.updateColor(red, green, blue);
         } catch (...) {
             LOG_ERROR << "[OutputControl] Failed to write to redis";
@@ -32,7 +35,7 @@ bool OutputControl::setIntensity(unsigned intensity) {
         _hsvColor.setIntensity(intensity);
         _hsvColor.convertToRGB(_rgbColor);
         try {
-            RedisHandler redis;
+            RedisHandler redis(_redisIpAddress);
             redis.updateColor(_rgbColor._red, _rgbColor._green, _rgbColor._blue);
         } catch (...) {
             LOG_ERROR << "[OutputControl] Failed to write to redis";

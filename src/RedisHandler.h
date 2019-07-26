@@ -2,10 +2,12 @@
 
 #include <cpp_redis/cpp_redis>
 
+#include "erostamas/Config.h"
+
 class RedisHandler {
 public:
-    RedisHandler() {
-        _redisClient.connect("192.168.1.247", 6379);
+    RedisHandler(std::string redisIpAddress) {
+        _redisClient.connect(redisIpAddress, 6379);
     }
 
     void updateColor(unsigned red, unsigned green, unsigned blue) {

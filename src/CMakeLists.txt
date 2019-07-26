@@ -22,7 +22,8 @@ add_executable(ledcontrol
 target_link_libraries(ledcontrol
     ledcontrol_library
     et_logging
-    et_command_processor)
+    et_command_processor
+    et_config)
 
 INSTALL(TARGETS ledcontrol
 	DESTINATION /usr/bin/

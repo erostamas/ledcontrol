@@ -1,3 +1,7 @@
+#pragma once
+
+#include <sys/stat.h>
+
 class Utils {
 public:
     static bool fileExists (const std::string& name) {

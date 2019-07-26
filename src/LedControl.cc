@@ -10,10 +10,8 @@
 #include <softPwm.h>
 
 #include "LedControl.h"
-#include "Common.h"
 #include "Utils.h"
 #include "erostamas/Logging.h"
-#include "RedisHandler.h"
 #include "StringCommandAdapter.h"
 #include "erostamas/UdpMessageReceiver.h"
 

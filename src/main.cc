@@ -3,7 +3,6 @@
 #include <cstdlib>
 #include <csignal>
 
-#include "Common.h"
 #include "erostamas/Logging.h"
 #include "LedControl.h"
 
