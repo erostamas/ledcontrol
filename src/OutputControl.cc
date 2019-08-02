@@ -22,9 +22,9 @@ bool OutputControl::setColor(unsigned red, unsigned green, unsigned blue) {
             LOG_ERROR << "[OutputControl] Failed to write to redis";
         }
         LOG_DEBUG << "[OutputControl] Setting color to " << _rgbColor._red << " " << _rgbColor._green << " " << _rgbColor._blue;
-        softPwmWrite(7, _rgbColor._red);
-        softPwmWrite(8, _rgbColor._green);
-        softPwmWrite(9, _rgbColor._blue);
+        softPwmWrite(8, _rgbColor._red);
+        softPwmWrite(9, _rgbColor._green);
+        softPwmWrite(7, _rgbColor._blue);
         return true;
     }
     return false;
@@ -41,9 +41,9 @@ bool OutputControl::setIntensity(unsigned intensity) {
             LOG_ERROR << "[OutputControl] Failed to write to redis";
         }
         LOG_DEBUG << "[OutputControl] Setting color to " << _rgbColor._red << " " << _rgbColor._green << " " << _rgbColor._blue;
-        softPwmWrite(7, _rgbColor._red);
-        softPwmWrite(8, _rgbColor._green);
-        softPwmWrite(9, _rgbColor._blue);
+        softPwmWrite(8, _rgbColor._red);
+        softPwmWrite(9, _rgbColor._green);
+        softPwmWrite(7, _rgbColor._blue);
         return true;
     }
     return false;
