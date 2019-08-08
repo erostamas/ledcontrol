@@ -31,12 +31,9 @@ void LedControl::run() {
     pinMode (7, OUTPUT);
     pinMode (8, OUTPUT);
     pinMode (9, OUTPUT);
-    softPwmCreate(7, 0, 255);
-    softPwmCreate(8, 0, 255);
-    softPwmCreate(9, 0, 255);
-
-    digitalWrite (8, HIGH) ; delay (500) ;
-    digitalWrite (8,  LOW) ; delay (500) ;
+    softPwmCreate(7, 0, 100);
+    softPwmCreate(8, 0, 100);
+    softPwmCreate(9, 0, 100);
 
     while (!_stopControlRequested) {
         std::this_thread::sleep_for(std::chrono::milliseconds(50));
