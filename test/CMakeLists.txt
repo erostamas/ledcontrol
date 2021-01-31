@@ -9,8 +9,9 @@ add_executable(${TESTNAME}
 
 target_link_libraries(${TESTNAME}
     ledcontrol_library
-    gmock
     gmock_main
+    gtest
+    gmock
     boost_log
     boost_thread
     boost_system
