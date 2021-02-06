@@ -18,7 +18,7 @@ WORKDIR /tmp/cpp_redis/build
 RUN cmake .. -DCMAKE_BUILD_TYPE=Release && make && make install
 
 WORKDIR /tmp/
-RUN wget https://github.com/erostamas/common/releases/download/raspbian-v0.0.1/erostamas_common.deb
+RUN wget https://github.com/erostamas/common/releases/download/raspbian-v0.0.2/erostamas_common.deb
 RUN apt install /tmp/erostamas_common.deb
 
 WORKDIR /

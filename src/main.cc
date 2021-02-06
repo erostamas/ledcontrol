@@ -30,7 +30,7 @@ int main(int argc, char* argv[]) {
     if (argc > 2) {
         parseCommandlineArguments(argc, argv, loglevel);
     }
-    init_logging("/ledcontrol_files/led.log", loglevel);
+    init_logging("/ledcontrol_files/led.log", loglevel, 1024);
     signal(SIGINT, signalHandler);
     signal(SIGTERM, signalHandler);
 
