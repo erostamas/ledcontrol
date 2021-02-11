@@ -1,3 +1,5 @@
+ARG DATE=default
+
 FROM balenalib/raspberrypi3:latest
 MAINTAINER Tamas Eros (tamas.eros1@gmail.com)
 
@@ -18,7 +20,8 @@ WORKDIR /tmp/cpp_redis/build
 RUN cmake .. -DCMAKE_BUILD_TYPE=Release && make && make install
 
 WORKDIR /tmp/
-RUN wget https://github.com/erostamas/common/releases/download/raspbian-v0.0.2/erostamas_common.deb
+RUN echo "$DATE"
+RUN wget https://github.com/erostamas/common/releases/download/raspbian-v0.0.3/erostamas_common.deb
 RUN apt install /tmp/erostamas_common.deb
 
 WORKDIR /
