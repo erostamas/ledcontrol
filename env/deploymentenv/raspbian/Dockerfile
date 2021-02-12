@@ -7,7 +7,12 @@ RUN apt-get install -y wget \
                        redis
 
 WORKDIR /tmp/
-RUN wget https://github.com/erostamas/common/releases/download/raspbian-v0.0.2/erostamas_common.deb
+RUN wget https://github.com/erostamas/common/releases/download/raspbian-v0.0.3/erostamas_common.deb
 RUN apt install /tmp/erostamas_common.deb
 
+RUN wget https://github.com/erostamas/ledcontrol/releases/download/raspbian-v0.0.1/ledcontrol.deb
+RUN apt install /tmp/ledcontrol.deb
+
 WORKDIR /
+
+ENTRYPOINT /usr/bin/ledcontrol

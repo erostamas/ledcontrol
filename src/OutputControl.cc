@@ -1,6 +1,7 @@
 #include "OutputControl.h"
 
 #include "erostamas/Logging.h"
+#include "erostamas/Config.h"
 #include "RedisHandler.h"
 
 #include <wiringPi.h>
@@ -8,7 +9,18 @@
 
 OutputControl::OutputControl() {
     Config config("/ledcontrol_files/config.json");
-    _redisIpAddress = config.get<std::string>("redis_ip_address", "192.168.1.247");
+    _redisIpAddress = config.get<std::string>("redis_ip_address", "192.168.1.246");
+    _redPin = config.get<unsigned>("red_pin", DEFAULT_RED_PIN);
+    _greenPin = config.get<unsigned>("green_pin", DEFAULT_GREEN_PIN);
+    _bluePin = config.get<unsigned>("blue_pin", DEFAULT_BLUE_PIN);
+
+    wiringPiSetup();
+    pinMode (_redPin, OUTPUT);
+    pinMode (_greenPin, OUTPUT);
+    pinMode (_bluePin, OUTPUT);
+    softPwmCreate(_redPin, 0, 100);
+    softPwmCreate(_greenPin, 0, 100);
+    softPwmCreate(_bluePin, 0, 100);
 }
 
 bool OutputControl::setColor(unsigned red, unsigned green, unsigned blue) {
@@ -22,9 +34,9 @@ bool OutputControl::setColor(unsigned red, unsigned green, unsigned blue) {
             LOG_ERROR << "[OutputControl] Failed to write to redis";
         }
         LOG_DEBUG << "[OutputControl] Setting color to " << _rgbColor._red << " " << _rgbColor._green << " " << _rgbColor._blue;
-        softPwmWrite(8, int(_rgbColor._red / 255.0 * 100));
-        softPwmWrite(9, int(_rgbColor._green / 255.0 * 100));
-        softPwmWrite(7, int(_rgbColor._blue / 255.0 * 100));
+        softPwmWrite(_redPin, int(_rgbColor._red / 255.0 * 100));
+        softPwmWrite(_greenPin, int(_rgbColor._green / 255.0 * 100));
+        softPwmWrite(_bluePin, int(_rgbColor._blue / 255.0 * 100));
         return true;
     }
     return false;
@@ -41,9 +53,9 @@ bool OutputControl::setIntensity(unsigned intensity) {
             LOG_ERROR << "[OutputControl] Failed to write to redis";
         }
         LOG_DEBUG << "[OutputControl] Setting color to " << _rgbColor._red << " " << _rgbColor._green << " " << _rgbColor._blue;
-        softPwmWrite(8, int(_rgbColor._red / 255.0 * 100));
-        softPwmWrite(9, int(_rgbColor._green / 255.0 * 100));
-        softPwmWrite(7, int(_rgbColor._blue / 255.0 * 100));
+        softPwmWrite(_redPin, int(_rgbColor._red / 255.0 * 100));
+        softPwmWrite(_greenPin, int(_rgbColor._green / 255.0 * 100));
+        softPwmWrite(_bluePin, int(_rgbColor._blue / 255.0 * 100));
         return true;
     }
     return false;

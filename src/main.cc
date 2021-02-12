@@ -4,6 +4,7 @@
 #include <csignal>
 
 #include "erostamas/Logging.h"
+#include "erostamas/Config.h"
 #include "LedControl.h"
 
 bool stopControlRequested = false;
@@ -13,24 +14,16 @@ void signalHandler(int signum) {
     exit(0);
 }
 
-void parseCommandlineArguments(int argc, char* argv[], std::string& loglevel) {
-    for (int i = 1; i < argc; ++i) {
-        std::string arg = argv[i];
-        if ((arg == "-l") || (arg == "--loglevel")) {
-            if (i + 1 < argc) {
-                loglevel = argv[i + 1];
-            }
-            return;
-        }
-    }
-}
+int main() {
+    Config config("/ledcontrol_files/config.json");
+    std::string loglevel = config.get<std::string>("loglevel", "INFO");
+    std::string logDir = config.get<std::string>("logdir", "/ledcontrol_files/log/");
+    std::string logFilePattern = config.get<std::string>("logdir", "led_%Y%m%d_%H%M%S.log");
+    uint64_t rotationSize =  config.get<uint64_t>("rotation_size", 1 * 1024 * 1024);
+    uint64_t logDirSizeLimit =  config.get<uint64_t>("log_dir_size_limit", 10 * 1024 * 1024);
 
-int main(int argc, char* argv[]) {
-    std::string loglevel = "INFO";
-    if (argc > 2) {
-        parseCommandlineArguments(argc, argv, loglevel);
-    }
-    init_logging("/ledcontrol_files/log/", "led_%Y%m%d_%H%M%S.log", loglevel, 1 * 1024 * 1024, 10 * 1024 * 1024);
+    init_logging(logDir, logFilePattern, loglevel, rotationSize, logDirSizeLimit);
+
     signal(SIGINT, signalHandler);
     signal(SIGTERM, signalHandler);
 

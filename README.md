@@ -1,13 +1,5 @@
 LEDCONTROL
 
-#INSTALL CPP-REDIS
+docker run -d -h ledcontrol --name ledcontrol --privileged --restart unless-stopped --network host -v /ledcontrol_files/:/ledcontrol_files erostamas/ledcontrol_deployment_raspbian_master
 
-'''
-git clone https://github.com/Cylix/cpp_redis.git
-cd cpp_redis
-git submodule init && git submodule update
-mkdir build && cd build
-cmake .. -DCMAKE_BUILD_TYPE=Release
-make
-sudo make install
-'''
+docker run -d --name ledcontrol_redis --restart unless-stopped --network host redis

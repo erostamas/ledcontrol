@@ -6,8 +6,6 @@
 #include <tgmath.h>
 #include <fstream>
 #include <iomanip>
-#include <wiringPi.h>
-#include <softPwm.h>
 
 #include "LedControl.h"
 #include "Utils.h"
@@ -27,14 +25,6 @@ LedControl::~LedControl() {
 }
 
 void LedControl::run() {
-    wiringPiSetup();
-    pinMode (7, OUTPUT);
-    pinMode (8, OUTPUT);
-    pinMode (9, OUTPUT);
-    softPwmCreate(7, 0, 100);
-    softPwmCreate(8, 0, 100);
-    softPwmCreate(9, 0, 100);
-
     while (!_stopControlRequested) {
         std::this_thread::sleep_for(std::chrono::milliseconds(50));
         _commandProcessor.processCommands();
